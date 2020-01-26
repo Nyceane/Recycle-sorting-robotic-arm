@@ -1,0 +1,29 @@
+item {
+  id: 1
+  name: 'Cardboard'
+}
+
+item {
+  id: 2
+  name: 'Glass'
+}
+
+item {
+  id: 3
+  name: 'Plastic'
+}
+
+item {
+  id: 4
+  name: 'Metal'
+}
+
+item {
+  id: 5
+  name: 'Trash'
+}
+
+item {
+  id: 6
+  name: 'Paper'
+}
