@@ -1,0 +1,26 @@
+<annotation>
+	<folder>test</folder>
+	<filename>plastic441.jpg</filename>
+	<path>C:\tensorflow1\models\research\object_detection\images\test\plastic441.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>512</width>
+		<height>384</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>plastic</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>70</xmin>
+			<ymin>39</ymin>
+			<xmax>392</xmax>
+			<ymax>329</ymax>
+		</bndbox>
+	</object>
+</annotation>
