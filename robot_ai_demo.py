@@ -85,14 +85,14 @@ def _robotic_left():
     print(f'x:{x} y:{y} z:{z} j1:{j1} j2:{j2} j3:{j3} j4:{j4}')
     if isRoboticActive == False:
         isRoboticActive = True
-        device.move_to(96, 100, -12, -47, wait=True)
-        device.move_to(166, -211, -52, -47, wait=True)
-        device.suck(enable=True)
+        device.move_to(91, -88, 1, -47, wait=True)
+        device.move_to(177, -163, -41, -120, wait=True)
+        device.suck(True)
         time.sleep(1)
-        device.move_to(300, 7, 15, 5, wait=True)
-        device.suck(enable=False)
+        device.move_to(214, 92, 5, -54, wait=True)
+        device.suck(False)
         time.sleep(0.5)
-        device.move_to(96, 100, -12, -47, wait=True)
+        device.move_to(91, -88, 1, -47, wait=True)
         isRoboticActive = False
 
 def _robotic_right():
@@ -104,7 +104,7 @@ def _robotic_right():
         device.move_to(166, -211, -52, -47, wait=True)
         device.suck(enable=True)
         time.sleep(1)
-        device.move_to(-125, -255, 33, -120, wait=True)
+        device.move_to(-75, -238, 34, -110, wait=True)
         device.suck(enable=False)
         time.sleep(0.5)
         device.move_to(96, 100, -12, -47, wait=True)
