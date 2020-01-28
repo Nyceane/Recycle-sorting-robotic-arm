@@ -1,0 +1,26 @@
+<annotation>
+	<folder>train</folder>
+	<filename>IMG_20200127_145558.jpg</filename>
+	<path>/home/airig/workspace/models/research/object_detection/images/train/IMG_20200127_145558.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>600</width>
+		<height>450</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>cardboard</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>70</xmin>
+			<ymin>85</ymin>
+			<xmax>495</xmax>
+			<ymax>360</ymax>
+		</bndbox>
+	</object>
+</annotation>

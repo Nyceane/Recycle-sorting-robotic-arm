@@ -1,0 +1,26 @@
+<annotation>
+	<folder>train</folder>
+	<filename>00000IMG_00000_BURST20200127150544849_COVER.jpg</filename>
+	<path>/home/airig/workspace/models/research/object_detection/images/train/00000IMG_00000_BURST20200127150544849_COVER.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>600</width>
+		<height>450</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>cardboard</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>104</xmin>
+			<ymin>90</ymin>
+			<xmax>515</xmax>
+			<ymax>372</ymax>
+		</bndbox>
+	</object>
+</annotation>
