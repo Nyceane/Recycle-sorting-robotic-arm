@@ -1,22 +1,3 @@
-######## Webcam Object Detection Using Tensorflow-trained Classifier #########
-#
-# Author: Evan Juras
-# Date: 1/20/18
-# Description: 
-# This program uses a TensorFlow-trained classifier to perform object detection.
-# It loads the classifier and uses it to perform object detection on a webcam feed.
-# It draws boxes, scores, and labels around the objects of interest in each frame
-# from the webcam.
-
-## Some of the code is copied from Google's example at
-## https://github.com/tensorflow/models/blob/master/research/object_detection/object_detection_tutorial.ipynb
-
-## and some is copied from Dat Tran's example at
-## https://github.com/datitran/object_detector_app/blob/master/object_detection_app.py
-
-## but I changed it to make it more understandable to me.
-
-
 # Import packages
 import os
 import cv2
@@ -24,6 +5,7 @@ import numpy as np
 import tensorflow as tf
 import sys
 import time
+import threading
 from serial.tools import list_ports
 from pydobot import Dobot
 
@@ -45,7 +27,7 @@ CWD_PATH = os.getcwd()
 PATH_TO_CKPT = os.path.join(CWD_PATH,MODEL_NAME,'frozen_inference_graph.pb')
 
 # Path to label map file
-PATH_TO_LABELS = os.path.join(CWD_PATH,'training','labelmap.pbtxt')
+PATH_TO_LABELS = os.path.join(CWD_PATH,'labelmap','labelmap.pbtxt')
 
 # Number of classes the object detector can identify
 NUM_CLASSES = 6
@@ -97,22 +79,20 @@ port = list_ports.comports()[0].device
 device = Dobot(port=port, verbose=True)
 isRoboticActive=False
 
-thread_left = threading.Thread(target=_robotic_left, daemon=True)
-thread_right = threading.Thread(target=_robotic_right, daemon=True)
 
 def _robotic_left():
     (x, y, z, r, j1, j2, j3, j4) = device.pose()
     print(f'x:{x} y:{y} z:{z} j1:{j1} j2:{j2} j3:{j3} j4:{j4}')
     if isRoboticActive == False:
         isRoboticActive = True
-        device.move_to(96, 100, -12, -47, wait=False)
-        device.move_to(166, -211, -52, -47, wait=False)
-        device.suck(True)
+        device.move_to(96, 100, -12, -47, wait=True)
+        device.move_to(166, -211, -52, -47, wait=True)
+        device.suck(enable=True)
         time.sleep(1)
-        device.move_to(300, 7, 15, 5, wait=False)
-        device.suck(False)
+        device.move_to(300, 7, 15, 5, wait=True)
+        device.suck(enable=False)
         time.sleep(0.5)
-        device.move_to(96, 100, -12, -47, wait=False)
+        device.move_to(96, 100, -12, -47, wait=True)
         isRoboticActive = False
 
 def _robotic_right():
@@ -120,14 +100,14 @@ def _robotic_right():
     print(f'x:{x} y:{y} z:{z} j1:{j1} j2:{j2} j3:{j3} j4:{j4}')
     if isRoboticActive == False:
         isRoboticActive = True
-        device.move_to(96, 100, -12, -47, wait=False)
-        device.move_to(166, -211, -52, -47, wait=False)
-        device.suck(True)
+        device.move_to(96, 100, -12, -47, wait=True)
+        device.move_to(166, -211, -52, -47, wait=True)
+        device.suck(enable=True)
         time.sleep(1)
-        device.move_to(-125, -255, 33, -120, wait=False
-        device.suck(False)
+        device.move_to(-125, -255, 33, -120, wait=True)
+        device.suck(enable=False)
         time.sleep(0.5)
-        device.move_to(96, 100, -12, -47, wait=False)
+        device.move_to(96, 100, -12, -47, wait=True)
         isRoboticActive = False
 
 def _move_robotic_arm(direction):
@@ -135,6 +115,9 @@ def _move_robotic_arm(direction):
         thread_left.start()
     elif direction == "right" and isRoboticActive == False:
         thread_right.start()
+
+thread_left = threading.Thread(target=_robotic_left, daemon=True)
+thread_right = threading.Thread(target=_robotic_right, daemon=True)
 
 while(True):
 
@@ -159,6 +142,21 @@ while(True):
         line_thickness=8,
         min_score_thresh=0.60)
 
+    #getting the detected item
+    i = 0
+    for x in np.squeeze(scores):
+        if x > .95:
+            print(np.squeeze(classes).astype(np.int32)[i])
+            result = np.squeeze(classes).astype(np.int32)[i]
+            #1 is cardboard
+            if result == 1:
+                _move_robotic_arm("left")
+            #3 is plastic
+            elif result == 3:
+                _move_robotic_arm("right")
+            break
+        i = i + 1
+    
     # All the results have been drawn on the frame, so it's time to display it.
     cv2.imshow('AI Robotic Sorting', frame)
 
