@@ -1,1 +1,1 @@
-"# NVIDIA Jetson Nano Trash Sorting Robotic Arm" 
+"# NVIDIA Jetson Nano Recycle Sorting Robotic Arm" 
